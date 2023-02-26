@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    //数组转化为二叉查找树
+    function BinarySearchTree() {
+      this.root = null;
+      let Node = function(key) {
+        this.value = key;
+        this.left = null;
+        this.right = null;
+      }
+      this.insert = function(key) {
+        const n = new Node(key);
+        this.root === null ? this.root = n : insertNode(this.root, n);
+      }
+      function insertNode(node, newNode) {
+        if (newNode.value < node.value) {
+          node.left === null ? node.left = newNode : insertNode(node.left, newNode);
+        } else {
+          node.right === null ? node.right = newNode : insertNode(node.right, newNode);
+        }
+      }
+    }
+    const a = [8,5,1,5,7,3,12,4,6,9,11];
+    const tree = new BinarySearchTree();
+    console.log(tree);
+    a.forEach(el => {
+      tree.insert(el);
+    });
+    console.log(tree.root);
+  </script>
+</body>
+</html>

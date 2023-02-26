@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>测试var</title>
+</head>
+<body>
+  <script>
+    const deps = {
+      '采购部':[1,2,[1,2,5]],
+      '人事部':[5,8,[78,110]],
+      '行政部':[5,14,79],
+      '运输部':[3,64,105],
+    }
+    // const obj = {
+    //   name: '111'
+    // }
+    const res = Object.values(deps).flat(Infinity);
+    const name = obj?.name;
+    console.log(res);
+    console.log(name);
+  </script>
+</body>
+</html>

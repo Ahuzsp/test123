@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    const str = '((({}';
+    const isMatch = function(str) {
+      const compareStr = '{[()]}';
+      const temp = [];
+      for (let i = 0; i < str.length; i++) {
+        const e = str[i];
+        if (compareStr.indexOf(e) <= 2) {
+          temp.push(e);
+        } else {
+          if (!temp.length) return false;
+          const index = compareStr.indexOf(e);
+          if (temp[temp.length - 1] !== compareStr[5-index]) {
+            return false;
+          } else {
+            temp.pop();
+          }
+        }
+        if (temp.length) return false;
+      }
+      return true
+    }
+    console.log(isMatch(str));
+  </script>
+</body>
+</html>

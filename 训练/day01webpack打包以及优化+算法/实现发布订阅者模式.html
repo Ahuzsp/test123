@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    class Pub {
+      constructor() {
+        this.dep = {};
+      }
+      on(eventType, callback) {
+        if (this.dep[eventType]) {
+          this.dep[eventType].push(callback)
+        } else {
+          this.dep[eventType] = [callback];
+        }
+        return this;
+      }
+      off(eventType, callback) {
+        this.dep[eventType] = this.dep[eventType].filter(cb => cb !== callback);
+        return this;
+      }
+      emit(eventType, ...args) {
+        this.dep[eventType].forEach(cb => cb(...args));
+        return this;
+      }
+      once(eventType, callback) {
+        const that = this;
+        const newFn = function(...args) {
+          callback(...args);
+          that.off(eventType, newFn);
+        }
+        that.on(eventType, newFn);
+        return this;
+      }
+    }
+    const p = new Pub();
+    const fn = (data) => console.log(data);
+    p.on('event1', fn);
+    p.on('event1', fn);
+    p.once('once', fn);
+    // p.on('event2', fn);
+    // p.emit('event1', [1,2,3]);
+    p.emit('once', [1,2,3]);
+  </script> 
+</body>
+</html>

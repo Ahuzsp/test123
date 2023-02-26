@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>两数之和</title>
+</head>
+<body>
+  <script>
+    // 数组中查找两个元素相加等于目标值
+    const twoSum = function(arr, target) {
+      const map = {};
+      for (let index = 0; index < arr.length; index++) {
+        const element = arr[index];
+        if (map[target - element] !== undefined) {
+          return [map[target - element], index]
+        } else {
+          map[element] = index; 
+        }
+      }
+    }
+    // 有序数组中查找目标值的下标(二分法)
+    const findIndex = function(arr, target) {
+      let low = 0;
+      let high = arr.length - 1;
+      while (low <= high) {
+        const mid = parseInt((low + high)/2);
+        if (arr[mid] > target) {
+          high = mid - 1;
+        } else if (arr[mid] < target) {
+          low = mid + 1;
+        } else {
+          return mid;
+        }
+      }
+      return -1;
+    }
+    const res = twoSum([2,5,7,4,1], 9); // [0, 2]
+    const res1 = findIndex([2,4,5,7,9,11,14,15], 14); // 5
+    console.log(res);
+    console.log(res1);
+
+  </script>
+</body>
+</html>

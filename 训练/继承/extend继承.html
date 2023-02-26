@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // es6使用extends关键字继承
+    class People{
+      constructor(name, age) {
+        this.name = name;
+        this.age = age;
+      }
+      breath() {
+        console.log(this.name + '正在呼吸！');
+      }
+    }
+    class Man extends People{
+      constructor(name, age, gender) {
+        super(name, age);
+        this.gender = gender;
+      }
+      breath() {
+        super.breath();
+      }
+    }
+    const m = new Man('小明', 18, '男');
+    console.log(m);
+    console.log(m.breath());
+  </script>
+</body>
+</html>

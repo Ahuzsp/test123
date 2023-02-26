@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    /*
+      实现数组排列组合
+    */
+    const arr = [1,2,3];
+    const combation = function(array, temp = []) {
+      const res = [];
+      const innerCombation = function(temp) {
+        array.forEach(el => {
+          if (temp.length === array.length - 1) {
+            if (!temp.includes(el)) {
+              res.push(temp.concat(el))
+            }
+          } else if (!temp.includes(el)) {
+            innerCombation(temp.concat(el));
+          }
+        });
+      }
+      innerCombation(temp);
+      return res;
+    }
+    console.time('combation');
+    console.log(combation(arr));
+    console.timeEnd('combation');
+  </script>
+</body>
+</html>

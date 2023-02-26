@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    /*
+      实现数组或对象的深拷贝
+    */
+    const deepClone = function(data) {
+      let res = data instanceof Object === 'Object' ? {} : [];
+      for (let key in data) {
+        if (data[key] instanceof Object === 'Object') {
+          res[key] = deepClone(data[key]);
+        } else {
+          res[key] = data[key];
+        }
+      }
+      return res;
+    }
+    const a = {
+      name: 'zs',
+      age: 18,
+      hobbies: {
+        one: 'basketball',
+        two: 'tennis'
+      }
+    };
+    const b = [1,2,3,4,5,6];
+    const aaa = deepClone(a);
+    const bbb = deepClone(b);
+    console.log(aaa, bbb);
+  </script>
+</body>
+</html>

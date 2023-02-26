@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // 下划线转驼峰
+    const obj = {
+      hello_mr: '12',
+      die_dw: 1,
+      sn_name: {
+        a_qn: '新时代',
+        b_qb: '接班人',
+      }
+    }
+    const underline2hump = function(str) {
+      return str.replace(/_(\w)/g, function(all, letter) {
+        return letter.toUpperCase();
+      })
+    }
+    const hump2underline = function(str) {
+      return str.replace(/([A-Z])/g, '_$1').toLowerCase();
+    }
+    const deepClone = function(obj) {
+      const res = {};
+      for (let key in obj) {
+        const newKey = underline2hump(key);
+        res[newKey] = obj[key] instanceof Object ? deepClone(obj[key]) : obj[key];
+      }
+      return res;
+    }
+    console.log(deepClone(obj));
+    console.log(hump2underline('cDeFd'));
+  </script>
+</body>
+</html>

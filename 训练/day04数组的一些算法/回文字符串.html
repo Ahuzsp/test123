@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // 判断是否是回文数
+    const isPalindrome = function(str) {
+      for(let i = 0; i < parseInt(str.length / 2); i++) {
+        if (str[i] !== str[str.length - 1 - i]) {
+          return false;
+        }
+      }
+      return true;
+    }
+    const fn2 = function(str) {
+      for(let i = 0; i < parseInt(str.length / 2); i++) {
+        if (str[i] !== str[str.length - 1 - i] && !isPalindrome(str.replace(str[i], ''))) {
+          return false;
+        }
+      }
+      return true;
+    }
+    const isDelPalindrome = function(str) {
+      let left = 0;
+      let right = str.length - 1;
+      while (left < right && str[left] === str[right]) {
+        left++;
+        right--;
+      }
+      if (fn(left+1, right)) {
+        return true;
+      }
+      if (fn(left, right-1)) {
+        return true;
+      }
+      function fn(start, end) {
+        while (start < end) {
+          if (str[start] !== str[end]) {
+            return false;
+          }
+          start++;
+          end--;
+        }
+        return true;
+      }
+      return false;
+    }
+    // const str = 'yescsey';
+    const str2 = 'abca';
+    // console.log(isPalindrome(str));
+    // console.log(str === str.split('').reverse().join(''));
+    console.log(isDelPalindrome(str2));
+    console.log(fn2(str2));
+    // 延伸：给定一个字符串，最多删除一个元素，判断能否成为回文字符串
+    // 例子：yesncsey true
+
+  </script>
+</body>
+</html>

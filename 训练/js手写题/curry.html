@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>curry</title>
+</head>
+<body>
+  <script>
+    const curry = function(fn, ...args) {
+      const fnL = fn.length;
+      const argsL = args.length;
+      if (fnL > argsL) {
+        return function(..._args) {
+          return curry(fn, ...args, ..._args);
+        }
+      } else {
+        return fn(...args);
+      }
+    }
+    function add(x, y, z) {
+      return x + y + z;
+    }
+    const curryAdd = curry(add);
+    console.log(curryAdd(1)(2,3));
+  </script>
+</body>
+</html>

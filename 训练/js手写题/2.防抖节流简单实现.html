@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>防抖节流实现</title>
+</head>
+<body>
+  <script>
+    function throttle(fn, delay) {
+      let timer = null;
+      return function(...args) {
+        if (!timer) {
+          timer = setTimeout(() => {
+            timer = null;
+            fn(...args);
+          }, delay);
+        }
+      }
+    }
+    function debounce(fn, delay) {
+      let timer = null;
+      return function(...args) {
+        if (timer) clearTimeout(timer);
+        timer = setTimeout(() => {
+          fn.call(this, ...args)
+        }, delay);
+      }
+    }
+    function test(n) {
+      console.log(n);
+    }
+    const b = throttle(test, 2000);
+    const c = debounce(test, 2000);
+    // setInterval(() => {
+    //   b('hello');
+    //   c('world');
+    // }, 10);
+      // b('hello');
+      // b('hello');
+      // b('hello');
+      // c('world');
+      // c('world');
+      // c('world');
+  </script>
+</body>
+</html>

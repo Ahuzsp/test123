@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    class Person {
+      constructor(name, age) {
+        this.name = name;
+        this.age = age;
+      }
+      eat() {
+        console.log(this.name + '正在吃东西!');
+      }
+      static fork() {
+        console.log('foke');
+      }
+    }
+    class Child extends Person {
+      constructor(name, age, gender) {
+        super(name, age);
+        this.gender = gender;
+      }
+      run() {
+        console.log(this.name + this.gender + '正在跑！');
+      }
+    }
+    const c = new Child('张三', 23, '男');
+    console.log(Person.fork());
+    console.log(c.run());
+  </script>
+</body>
+</html>

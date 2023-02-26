@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>列表转树形结构</title>
+</head>
+<body>
+  <script>
+    // 测试
+    const data = [
+      {
+        "id": 1,
+        "name": "部门1",
+        "pid": 0,
+        "children": [
+          {
+            "id": 2,
+            "name": "部门2",
+            "pid": 1,
+            "children": []
+          },
+          {
+            "id": 3,
+            "name": "部门3",
+            "pid": 1,
+            "children": [
+              {
+                "id": 4,
+                "name": "部门4",
+                "pid": 3,
+                "children": [
+                  {
+                    "id": 5,
+                    "name": "部门5",
+                    "pid": 4,
+                    "children": []
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": 10,
+        "name": "部门10",
+        "pid": 9,
+        "children": [
+          {
+            "id": 11,
+            "name": "部门11",
+            "pid": 10,
+            "children": []
+          },
+        ]
+      }
+    ]
+    const treeToList = function(tree) {
+      const res = [];
+      const queue = [...tree];
+      while (queue.length) {
+        const node = queue.pop();
+        if (node.children) {
+          queue.push(...node.children);
+        }
+        res.push(node);
+      }
+      return res;
+    }
+    console.log(treeToList(data))
+  </script>
+</body>
+</html>

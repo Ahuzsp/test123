@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>call,apply,bind实现</title>
+</head>
+<body>
+  <script>
+    const obj = {
+      a: 'xyz',
+      print: function(name, age) {
+        this.name = name;
+        this.age = age;
+        // console.log(this.a);
+        // console.log(name, age);
+      }
+    }
+    const obj2 = {
+      a: 'wxz'
+    }
+    var a = '123'
+    Function.prototype.myCall = function(context, ...args) {
+      const fn = Symbol();
+      const ctx = context || window;
+      ctx[fn] = this;
+      args = args.length ? args : [];
+      const res = ctx[fn](...args);
+      delete ctx[fn];
+      return res;
+    }
+    Function.prototype.myApply = function(context, args) {
+      const fn = Symbol();
+      const ctx = context || window;
+      ctx[fn] = this;
+      args = args.length ? args : [];
+      const res = ctx[fn](...args);
+      delete ctx[fn];
+      return res;
+    }
+    Function.prototype.myBind = function(context, ...args) {
+      const fn = this;
+      const ctx = context || window;
+      args = args.length ? args : [];
+      return newFn = function(...newArgs) {
+        if (this instanceof newFn) {
+          return new fn(...args, ...newArgs);
+        }
+        return fn.apply(context, [...args, ...newArgs]);
+      }
+    }
+    const B = obj.print.myBind(obj2);
+    const b = new B('学生', 12);
+    console.log(b);
+    // obj.print.myApply(obj2, ['学生', 25]);
+  </script>
+</body>
+</html>

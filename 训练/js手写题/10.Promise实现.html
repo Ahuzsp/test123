@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Promise实现</title>
+</head>
+<body>
+  <script>
+    class myPromise {
+      callbacks = [];
+      state = 'pending';
+      value = '';
+      constructor(fn) {
+        fn(this._resolve.bind(this), this._reject.bind(this));
+      }
+      then(onFullfilled, onRejected) {
+        return new myPromise((resolve, reject) => {
+          this._handle({
+            onFullfilled: onFullfilled || null,
+            onRejected: onRejected || null,
+            resolve,
+            reject,
+          })
+        })
+      }
+      _handle(callback) {
+        if (this.state === 'pending') {
+          this.callbacks.push(callback);
+          return;
+        }
+        let cb = this.state === 'fullFilled' ? callback.onFullfilled : callback.onRejected;
+        if (!cb) {
+          cb = this.state === 'fullFilled' ? callback.resolve : callback.reject;
+          cb(this.value);
+          return;
+        }
+        let ret = cb(this.value);
+        cb = this.state === 'fullFilled' ? callback.resolve : callback.reject;
+        cb(ret);
+      }
+      _resolve(value) {
+        if (value && (['object', 'function'].includes(typeof value))) {
+          let then = value.then;
+          if (typeof then === 'function') {
+            then.call(value, this._resolve.bind(this), this._reject.bind(this));
+            return;
+          }
+        }
+        this.state = 'fullFilled';
+        this.value = value;
+        this.callbacks.forEach(callback => this._handle(callback));
+        return;
+      }
+      _reject(error) {
+        this.state = 'rejected';
+        this.value = error;
+        this.callbacks.forEach(callback => this._handle(callback));
+      }
+    }
+    function fetchData() {
+      return new myPromise((resolve, reject) => {
+          setTimeout(() => {
+            resolve('hahah');
+          }, 1000);
+        });
+    }
+    // const p1 = fetchData().then(data1 => {return data1 + ' wei'});
+    // const p2 = p1.then((data2) => {console.log(data2);}); // willem 正确输出应该是 'willem wei'
+    // const p3 = p1.then((data3) => {console.log(data3);});
+    new Promise((resolve, reject) => {
+      console.log("log: 外部promise");
+        resolve();
+      })
+      .then(() => {
+        console.log("log: 外部第一个then");
+        new Promise((resolve, reject) => {
+          console.log("log: 内部promise");
+          resolve();
+        })
+        .then(() => {
+          console.log("log: 内部第一个then");
+        })
+        .then(() => {
+          console.log("log: 内部第二个then");
+        });
+      })
+      .then(() => {
+      console.log("log: 外部第二个then");
+    });
+  </script>
+</body>
+</html>

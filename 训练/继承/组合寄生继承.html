@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // 组合继承，子类的原型=父类的实例
+    function Father(name, age) {
+      this.name = name;
+      this.age = age;
+    }
+    Father.prototype.speak = function() {
+      console.log(this.name + '在说话');
+    }
+    function Son(name, age, gender) {
+      Father.call(this, name, age);
+      this.gender = gender;
+    }
+    Son.prototype = new Father();
+    // Son.prototype = Object.create(Father.prototype);
+    // Son.prototype.constructor = Son;
+    const s = new Son('xiaozhang', 15, '男');
+    console.log(s.speak());
+  </script>
+</body>
+</html>

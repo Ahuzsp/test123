@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Proxy</title>
+</head>
+<body>
+  <script>
+    // const test = {
+    //   name: 'xz',
+    //   age: 24,
+    //   gender: '男',
+    // }
+    // let newProxy = new Proxy(test, {
+    //   get(target, name) {
+    //     console.log('get', target, name);
+    //     return Reflect.get(target, name);
+    //   },
+    //   set(target, key, value) {
+    //     console.log('set', target, key, value);
+    //     return Reflect.set(target, key, value,);
+    //   },
+    //   defineProperty(target, key, attribute) {
+    //     console.log('defineProperty');
+    //     Reflect.defineProperty(target, key, attribute);
+    //   },
+    //   deleteProperty(target, name) {
+    //     console.log('delete', name);
+    //     return Reflect.deleteProperty(target, name);
+    //   },
+    //   has(target, name) {
+    //     console.log('has', name);
+    //     return Reflect.has(target, name);  
+    //   }
+    // })
+    const queuedObservers = new Set();
+    const observe = fn => queuedObservers.add(fn);
+    const observable = obj => new Proxy(obj, {set});
+
+    function set(target, key, value, receiver) {
+      const result = Reflect.set(target, key, value, receiver);
+      queuedObservers.forEach(observer => observer());
+      return result;
+    }
+    const person = observable({
+      name: '张三',
+      age: 20
+    });
+    function print() {
+      console.log(`${person.name}, ${person.age}`)
+    }
+    observe(print);
+    person.name = '李四';
+    console.log(observable)
+  </script>
+</body>
+</html>

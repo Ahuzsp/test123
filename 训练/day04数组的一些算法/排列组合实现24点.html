@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    const arr = [10,10,3,8];
+    const getRepeatMap = (arr) => {
+      const map = {};
+      arr.forEach(item => {
+        if (!map[item]) {
+          map[item] = 1
+        } else {
+          map[item] += 1;
+        }
+      })
+      return map;
+    }
+    // 判断是否重复数组
+    const isIncludeItem = (mainArr, targetArr) => {
+      return mainArr.some(arr => arr.join('') === targetArr.join(''));
+    }
+    // 实现排列组合的方法
+    const permute = function(array, isAllowRepeat, temp = []) {
+      const res = [];
+      const innerPermute = (temp) => {
+        array.forEach(el => {
+          if (temp.length === array.length - 1 || (isAllowRepeat && temp.length === array.length - 2)) {
+            if (!temp.includes(el) || isAllowRepeat) {
+              res.push(temp.concat(el));
+            }
+          } else if (!temp.includes(el) || isAllowRepeat) {
+            innerPermute(temp.concat(el));
+          }
+        });
+      }
+      innerPermute(temp);
+      return res;
+    }
+    // 实现数组排列组合（含重复元素）
+    const permuteArr = function(array, temp = []) {
+      const res = [];
+      const repeatNumberMap = getRepeatMap(array);
+      // console.log(repeatNumberMap, 123);
+      const innerPermuteArr = (temp) => {
+        array.forEach((item) => {
+          if (temp.length === array.length - 1) {
+            if (getRepeatMap(temp)[item] !== repeatNumberMap[item] && !isIncludeItem(res, temp.concat(item))) {
+              res.push(temp.concat(item));
+            }
+          } else if (getRepeatMap(temp)[item] !== repeatNumberMap[item]){
+            innerPermuteArr(temp.concat(item));
+          }
+        })
+      }
+      innerPermuteArr(temp);
+      return res;
+    }
+    // 实现24点的方法
+    const calculate24point = function(array) {
+      // 先得到4个数的所有排列组合情况\
+      const sortArr = permuteArr(array);
+      const operators = ['+', '-', '*', '/'];
+      const sortOperators = permute(operators, true);
+      // return { sortArr, sortOperators };
+      const ret = [];
+      sortArr.forEach(item => {
+        sortOperators.forEach(operator => {
+          const expression = item[0] + operator[0] + item[1] + operator[1] + item[2] + operator[2] + item[3];
+          const result = eval(expression);
+          if (result === 24) {
+            ret.push(expression);
+          }
+        })
+      })
+      return ret;
+    }
+    console.time('calculate24point');
+    console.log(calculate24point(arr));
+    console.timeEnd('calculate24point');
+
+  </script>
+</body>
+</html>

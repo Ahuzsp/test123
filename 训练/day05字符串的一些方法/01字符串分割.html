@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+<script>
+    const splitStr= function() {
+        const args = Array.prototype.slice.call(arguments);
+        const res = [];
+        args.forEach((item) => {
+            if (item.length % 8 !== 0) {
+                item = addRestStr(item, 8 - item.length % 8);
+            }
+            let left = 0;
+            let right = 8;
+            while (item.length >= right) {
+            res.push(item.slice(left, right));
+            left = right;
+            right += 8;
+            } 
+        });
+        return res;
+    }
+    const addRestStr = function(str, num) {
+        for (let i = 0; i < num; i++) {
+            str+=0;
+        }
+        return str;
+    }
+console.log(splitStr('sqwdw', '12345678922', 'dwf8888'));
+</script>
+</body>
+</html>

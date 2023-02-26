@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>滑动窗口</title>
+</head>
+<body>
+  <script>
+    function longestPalindrome(str) {
+      /*
+        给你一个字符串 s，找到 s 中最长的回文子串。
+        输入：s = "babad"
+        输出："bab"
+        解释："aba" 同样是符合题意的答案。
+      */
+      let left = 0;
+      let right = 1;
+      let min = Infinity;
+      let str = '';
+      while (right <= str.length) {
+        if (isPalindrome(str.slice(left, right))) {
+          min = Math.min(min, right - left + 1);
+          left++;
+        } else {
+          right++;
+        }
+      }
+      return min === Infinity ? 0 : min;
+    }
+    console.log(longestPalindrome('babad'));
+  </script>
+</body>
+</html>

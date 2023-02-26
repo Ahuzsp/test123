@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // 二分查找目标值 [1,2,5,7,8,9],[2,3,4,5]取中位数
+    const findMidNumber = function(nums1, nums2) {
+      let k, type;
+      k = Math.ceil((nums1.length + nums2.length)/2);
+      if ((nums1.length + nums2.length)%2 === 0) {
+        type = 'ou';
+      } else {
+        type = 'ji';
+      }
+      while (k > 1) {
+        let mid = Math.floor(k/2);
+        if (nums1[mid-1] > nums2[mid-1] || !nums1.length) {
+          mid = mid > nums2.length ? nums2.length : mid;
+          nums2.splice(0, mid)
+        } else {
+          mid = mid > nums1.length ? nums1.length : mid;
+          nums1.splice(0, mid);
+        }
+        k = k - mid;
+      }
+      console.log(nums1);
+      console.log(nums2);
+      if (type === 'ji') {
+        if (!nums1.length) {
+          return nums2[0];
+        } else if (!nums2.length) {
+          return nums1[0];
+        } else {
+          return Math.min(nums1[0], nums2[0]);
+        }
+      } else {
+        if (!nums1.length) {
+          return (nums2[0] + nums2[1]) / 2;
+        } else if (!nums2.length) {
+          return (nums1[0] + nums1[1]) / 2;
+        } else {
+          return (nums1[0] + nums2[0]) / 2;
+        }
+      }
+    };
+    console.log(findMidNumber([1,2],[-1,3]));
+  </script>
+</body>
+</html>

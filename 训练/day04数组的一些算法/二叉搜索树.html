@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    //数组转化为二叉查找树
+    root = null;
+    class Node {
+      constructor(key) {
+        this.value = key;
+        this.left = null;
+        this.right = null;   
+      }
+    }
+    const insert = function(key) {
+      const n = new Node(key);
+      this.root === null ? this.root = n : insertNode(this.root, n);
+    }
+    const insertNode = function(node, newNode) {
+      if (newNode.value < node.value) {
+        node.left === null ? node.left = newNode : insertNode(node.left, newNode);
+      } else {
+        node.right === null ? node.right = newNode : insertNode(node.right, newNode);
+      }
+    }
+
+    // 如果是有序数组，那么可以简化算法，减少算法时间复杂度
+    const insertNodeByOrder = function(arr) {
+      while (arr.length) {
+        const mid = parseInt(arr.length/2);
+        const n = new Node(arr[mid]);
+        const leftNodes = arr.slice(0, mid);
+        const rightNodes = arr.slice(mid + 1);
+        n.left = insertNodeByOrder(leftNodes);
+        n.right = insertNodeByOrder(rightNodes);
+        return n;
+      }
+      return null;
+    }
+    // 先序遍历(根在前，根->左->右)
+    const preErgodic = function(root) {
+      const res = [];
+      res.push(root.value);
+      if (root.left) {
+        res.push(...preErgodic(root.left));
+      }
+      if (root.right) {
+        res.push(...preErgodic(root.right));
+      }
+      return res;
+    }
+    // 中序遍历(根在中，左->根->右)
+    const midErgodic = function(root) {
+      const mid = [];
+      if (root.left) {
+        mid.push(...midErgodic(root.left));
+      }
+      mid.push(root.value);
+      if (root.right) {
+        mid.push(...midErgodic(root.right));
+      }
+      return mid;
+    }
+    // 后序遍历(根在后，左->右->根)
+    const postErgodic = function(root) {
+      const post = [];
+      if (root.left) {
+        post.push(...postErgodic(root.left));
+      }
+      if (root.right) {
+        post.push(...postErgodic(root.right));
+      }
+      post.push(root.value);
+      return post;
+    }
+    // 层级遍历
+    const a = [6,3,9,10,5,2,8,4,1,7];
+    const b = [-10,-3,0,5,9];
+    console.log(insertNodeByOrder(b));
+    a.forEach(el => {
+      insert(el);
+    });
+    console.log(root);
+    console.log(preErgodic(root));
+    console.log(midErgodic(root));
+    console.log(postErgodic(root));
+  </script>
+</body>
+</html>

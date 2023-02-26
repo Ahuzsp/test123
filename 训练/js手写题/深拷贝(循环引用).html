@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+  const obj = {
+    a: 1,
+    b: function() {
+      console.log(1)
+    },
+    c: undefined,
+    d: [1,2,3],
+    [Symbol('g')]: 'ni'
+  }
+  // const obj1 = {
+  //   name: 'fb'
+  // }
+  // obj.f = obj
+  const deepClone = function(obj, hash =  new WeakMap()) {
+    if (obj === null || typeof obj !== 'object') return obj
+    if (obj instanceof RegExp) {
+      return new RegExp(obj)
+    }
+    if (obj instanceof Date) {
+      return new Date(obj)
+    }
+    if (hash.has(obj)) return hash.get(obj)
+    let cloneObj = new obj.constructor()
+    hash.set(obj, cloneObj)
+    console.log(Object.getOwnPropertySymbols(obj));
+    for (let key in obj) {
+      // if (obj.hasOwnProperty(key)) {
+        cloneObj[key] = deepClone(obj[key], hash)
+      // }
+    }
+    const symbols = Object.getOwnPropertySymbols(obj)
+    for (let i = 0; i < symbols.length; i ++) {
+      const sKey = symbols[i]
+      cloneObj[sKey] = deepClone(obj[sKey], hash)
+    }
+    return cloneObj
+  }
+  console.log(obj)
+
+  </script>
+</body>
+</html>

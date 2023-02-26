@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    const getMinAbsolute = function(arr) {
+      const map = {};
+      let min = Infinity;
+      for(let i = 0; i < arr.length; i++) {
+        for (let j = i + 1; j < arr.length; j++) {
+          const res = [arr[i], arr[j]];
+          const key = arr[i] + arr[j] >= 0 ? arr[i] + arr[j] : 0 - (arr[i] + arr[j]);
+          map[key] = res;
+          min = Math.min(min, key);
+        }
+      }
+      console.log(map[min][0]);
+      console.log(map[min][1]);
+      console.log(min);
+    }
+    getMinAbsolute([-1,-3,7,5,11,15]);
+  </script>
+</body>
+</html>

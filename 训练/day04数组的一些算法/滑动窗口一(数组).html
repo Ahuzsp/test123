@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>滑动窗口</title>
+</head>
+<body>
+  <script>
+    function getMinSubLength(array, target) {
+      // 滑动窗口思想一：数组中找到目标大于等于目标值的最小连续字符
+      let left = 0;
+      let right = 0;
+      let min = Infinity;
+      let sum = array[0];
+      while (right <= array.length) {
+        if (sum >= target) {
+          min = Math.min(min, right - left + 1);
+          if (min === 1) return min;
+          sum -= array[left++];
+        } else {
+          right++;
+          sum += array[right];
+        }
+      }
+      return min === Infinity ? 0 : min;
+    }
+    console.log(getMinSubLength([2,1,3,4,1],5));
+  </script>
+</body>
+</html>

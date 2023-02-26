@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    const constor = function(name, age) {
+      return { name, age };
+    }
+    const myNew = function(fn, ...args) {
+      if (typeof fn !== 'function') throw `${fn} is not a function`;
+      const obj = Object.create(fn.prototype);
+      const constorObj = fn.apply(obj, args); // 将构造函数fn的this绑定到obj中
+      if (
+        typeof constorObj === 'object'
+        && constorObj !== null
+        || typeof constorObj === 'function'
+      ) {
+        return constorObj;
+      } else {
+        return obj;
+      }
+    }
+    let a = myNew(constor, 'zs', 16);
+    console.log(a)
+  </script>
+</body>
+</html>

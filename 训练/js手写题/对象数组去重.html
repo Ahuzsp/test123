@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>对象数组去重</title>
+</head>
+<body>
+  <script>
+    // 输入:
+    // [{a:1,b:2,c:3},{b:2,c:3,a:1},{d:2,c:2}]
+    // 输出:
+    // [{a:1,b:2,c:3},{d:2,c:2}]
+    const sortObj = function(obj) {
+      const res = {};
+      Object.keys(obj).sort().map((k) => {
+        res[k] = obj[k];
+      })
+      return JSON.stringify(res);
+    }
+    const unique = function(arr) {
+      let set = new Set();
+      arr.forEach(e => {
+        set.add(sortObj(e));
+      });
+      return [...set].map((item) => JSON.parse(item));
+    }
+    console.log(unique([{a:1,b:2,c:3},{b:2,c:3,a:1},{d:2,c:2}]));
+  </script>
+</body>
+</html>

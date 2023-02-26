@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>new关键字的实现</title>
+</head>
+<body>
+  <script>
+    function test(name) {
+      return {name};
+    }
+    class A {
+      constructor(name) {
+        this.name = name;
+      }
+    }
+    function myNew(fn, ...args) {
+      const isFn = typeof fn === 'function';
+      if (!isFn) throw Error('fn is not a function!');
+      const retObj = fn.call(this, ...args);
+      const obj = Object.create(fn.prototype);
+      if (['object', 'function'].includes(typeof retObj) && retObj !== null) return retObj;
+      return obj;
+    }
+    const a = myNew(test, '学生');
+    console.log(a);
+    console.log(new A('老师'));
+  </script>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    const data = [
+      {
+        "id": "1",
+        "sub": [
+          {
+            "id": "2",
+            "sub": [
+              {
+                "id": "3",
+                "sub": null
+              },
+              {
+                "id": "4",
+                "sub": [
+                  {
+                    "id": "6",
+                    "sub": null
+                  }
+                ]
+              },
+              {
+                "id": "5",
+                "sub": null
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "7",
+        "sub": [
+          {
+            "id": "8",
+            "sub": [
+              {
+                "id": "9",
+                "sub": null
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "10",
+        "sub": null
+      }
+    ]
+    const findPath = function(data, id, res = []) {
+      data.forEach((el, index) => {
+        res.push(el.id);
+        if (el.sub) {
+          const path = findPath(el.sub, id, res);
+          if (JSON.stringify(path) === JSON.stringify(res)) {
+            res.pop();
+          }
+        }
+      });
+      return res;
+    }
+    console.log(findPath(data, 9));
+  </script>
+</body>
+</html>

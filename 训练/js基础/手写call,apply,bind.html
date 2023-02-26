@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>手写call</title>
+</head>
+<body>
+  <script>
+    Function.prototype.myCall = function(context, ...args) {
+      let ctx = context || window;
+      let func = Symbol();
+      ctx[func] = this;
+      args = args || [];
+      const res = args.length > 0 ? ctx[func](...args) : ctx[func]();
+      delete ctx[func];
+      return res;
+    }
+    Function.prototype.myApply = function(context, args = []) {
+      let ctx = context || window;
+      let func = Symbol();
+      ctx[func] = this;
+      const res = args.length ? ctx[func](...args) : ctx[func]();
+      delete ctx[func];
+      return res;
+    }
+    Function.prototype.myBind = function(context, ...args) {
+      const ctx = context || window;
+      args = args || [];
+      const fn = this;
+      return function newFn(...newArgs) {
+        if (this instanceof newFn) {
+          return new fn(...args, ...newArgs);
+        }
+        return fn.apply(context, [...args, ...newArgs]);
+      }
+
+    }
+    let name = '小于', age = 17;
+    let obj = {
+      name: '小张',
+      age: this.age,
+      myFn: function(from, to) {
+        console.log(this.name, this.age);
+        console.log(from, to);
+      },
+    }
+    let db = {
+      name: '德玛',
+      age: 999,
+    }
+    // obj.myFn.myCall(db);
+    // obj.myFn.myApply(db, [1, 2]);
+    const Fn = obj.myFn.myBind(db);
+    const f = new Fn('123', '234')
+    // console.log(Fn());
+    console.log(f);
+  </script>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Object.assign实现</title>
+</head>
+<body>
+  <script>
+    // Object.create()会将参数对象作为一个新创建的空对象的原型, 并返回这个空对象
+    const myAssign = function(obj1, obj2) {
+      for (let k in obj2) {
+        obj1[k] = obj2[k];
+      }
+      return obj1;
+    }
+    const a = {
+      name: '洗澡',
+      age: 15,
+    }    
+    const b = {
+      gender: '男',
+      class: '12班',
+      age: 16,
+    }
+    console.log(myAssign(a, b));
+  </script>
+</body>
+</html>

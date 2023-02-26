@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>测试var</title>
+</head>
+<body>
+  <script>
+    // 测试一
+    let a = 1
+    function b(a) {
+      a = 2
+      console.log(a)
+    }
+    b(a);
+    console.log(a);
+    // 测试二
+    /*
+      var a = b = 10;
+      相当于 b=10, var a = b
+      所以b没有声明，是全局变量
+    */
+    // var a = b = 10;
+    // (function() {
+    //   var a = b = 20;
+    // })();
+    // console.log(a);
+    // console.log(b);
+  </script>
+</body>
+</html>
